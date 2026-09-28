@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>BioQuest Atlas — Public Human Biology</title>
+  <meta name="description" content="BioQuest Atlas is a public interactive human biology learning platform.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="atlas.css">
+</head>
+<body>
+  <div class="public-strip">
+    <div class="wrap public-strip__inner">
+      <span class="public-live"><i></i> PUBLIC ATLAS</span>
+      <span>Open educational experience • No login required</span>
+      <span class="strip-right">BIOQUEST / ATLAS-02</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="index.html" aria-label="BioQuest home">
+        <span class="brand-badge">BQ</span>
+        <span>Bio<span>Quest</span></span>
+      </a>
+
+      <nav class="main-nav">
+        <a class="active" href="#atlas">Atlas</a>
+        <a href="#systems">Systems</a>
+        <a href="#bloodmatch">BloodMatch</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="#about">About</a>
+      </nav>
+
+      <a class="public-pill" href="#atlas"><span></span>Open public explorer</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="atlas-hero wrap" id="atlas">
+      <div class="intro">
+        <div class="kicker">HUMAN BIOLOGY / INTERACTIVE ATLAS</div>
+        <h1>A different way to<br><span>learn anatomy.</span></h1>
+        <p class="intro-copy">Navigate the body like an atlas: choose a region, inspect an organ, and follow its connections across the body's systems.</p>
+
+        <div class="intro-actions">
+          <button class="button button-primary" id="jumpToBody" type="button">Open body map <span>↘</span></button>
+          <a class="button button-secondary" href="quiz.html">Take the public quiz</a>
+        </div>
+
+        <div class="intro-meta">
+          <div><strong>PUBLIC</strong><span>Anyone can explore</span></div>
+          <div><strong>INTERACTIVE</strong><span>Live organ profiles</span></div>
+          <div><strong>EDUCATIONAL</strong><span>No diagnosis</span></div>
+        </div>
+      </div>
+
+      <div class="atlas-workspace" id="bodyMap">
+        <aside class="region-rail" aria-label="Body regions">
+          <div class="rail-title">BODY MAP</div>
+
+          <button class="region-button active" data-region="head" type="button">
+            <span class="region-index">01</span>
+            <span><strong>Head</strong><small>Brain • Senses</small></span>
+          </button>
+
+          <button class="region-button" data-region="chest" type="button">
+            <span class="region-index">02</span>
+            <span><strong>Chest</strong><small>Heart • Lungs</small></span>
+          </button>
+
+          <button class="region-button" data-region="abdomen" type="button">
+            <span class="region-index">03</span>
+            <span><strong>Abdomen</strong><small>Liver • Stomach • Kidneys</small></span>
+          </button>
+
+          <div class="rail-note">
+            <span class="small-dot"></span>
+            Select a region to reveal its organs.
+          </div>
+
+          <div class="organ-list" id="organList"></div>
+        </aside>
+
+        <section class="body-view" aria-label="Interactive body">
+          <div class="body-view__top">
+            <div>
+              <span class="section-tag">ANATOMY VIEW</span>
+              <h2 id="regionTitle">Head</h2>
+            </div>
+            <span class="view-status"><i></i> LIVE</span>
+          </div>
+
+          <div class="anatomy-canvas">
+            <div class="canvas-grid"></div>
+            <div class="scan-line"></div>
+            <div class="body-aura"></div>
+
+            <img src="assets/human-body.png" class="atlas-body" alt="Human anatomical body">
+
+            <div class="region-focus focus-head"></div>
+            <div class="region-focus focus-chest"></div>
+            <div class="region-focus focus-abdomen"></div>
+
+            <div class="canvas-coordinates top-left">FRONT / 01</div>
+            <div class="canvas-coordinates bottom-right">LAT 41.00 • BIOQUEST</div>
+          </div>
+
+          <div class="body-view__bottom">
+            <div>
+              <span class="bottom-label">CURRENT REGION</span>
+              <strong id="regionSummary">Brain and sensory structures</strong>
+            </div>
+            <button class="text-button" id="allOrgansBtn" type="button">Show all organs →</button>
+          </div>
+        </section>
+
+        <aside class="profile-panel" aria-live="polite">
+          <div class="profile-top">
+            <span class="section-tag">ORGAN PROFILE</span>
+            <button class="icon-button" id="profileClose" type="button" aria-label="Clear profile">×</button>
+          </div>
+
+          <div class="profile-emblem" id="profileIcon">✦</div>
+          <h2 id="profileTitle">Brain</h2>
+          <p class="profile-subtitle" id="profileSubtitle">Central control of the nervous system</p>
+
+          <div class="profile-rule"></div>
+
+          <div class="profile-section">
+            <span class="section-tag">WHAT IT DOES</span>
+            <p id="profileDescription"></p>
+          </div>
+
+          <div class="profile-stats">
+            <div><span>ROLE</span><strong id="statRole">Control</strong></div>
+            <div><span>SYSTEM</span><strong id="statSystem">Nervous</strong></div>
+          </div>
+
+          <button class="wide-button" id="deepDiveBtn" type="button">Open full organ page <span>↗</span></button>
+
+          <div class="profile-warning">
+            <span>i</span>
+            <p>For public education only. This page does not diagnose or assess an individual's health.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="connection-band wrap">
+      <div>
+        <span class="section-tag">THE BODY IS A NETWORK</span>
+        <h2>One organ. Multiple connections.</h2>
+      </div>
+      <div class="connection-items">
+        <div><span>01</span><strong id="connectionA">Brain ↔ Spinal cord</strong></div>
+        <div><span>02</span><strong id="connectionB">Brain ↔ Senses</strong></div>
+        <div><span>03</span><strong id="connectionC">Brain ↔ Hormonal signals</strong></div>
+      </div>
+    </section>
+
+    <section class="content-section wrap" id="systems">
+      <div class="section-intro">
+        <span class="section-tag">BODY SYSTEMS</span>
+        <h2>Explore by system, not by page.</h2>
+        <p>Each module groups the structures that work together.</p>
+      </div>
+
+      <div class="module-grid">
+        <button type="button" class="module-card" data-module="Circulatory">
+          <span class="module-number">01</span><strong>Circulatory</strong><small>Heart • Blood • Vessels</small><b>↗</b>
+        </button>
+        <button type="button" class="module-card" data-module="Respiratory">
+          <span class="module-number">02</span><strong>Respiratory</strong><small>Lungs • Airways • Alveoli</small><b>↗</b>
+        </button>
+        <button type="button" class="module-card" data-module="Nervous">
+          <span class="module-number">03</span><strong>Nervous</strong><small>Brain • Spinal cord • Nerves</small><b>↗</b>
+        </button>
+        <button type="button" class="module-card" data-module="Digestive">
+          <span class="module-number">04</span><strong>Digestive</strong><small>Stomach • Liver • Intestines</small><b>↗</b>
+        </button>
+        <button type="button" class="module-card" data-module="Urinary">
+          <span class="module-number">05</span><strong>Urinary</strong><small>Kidneys • Ureters • Bladder</small><b>↗</b>
+        </button>
+        <button type="button" class="module-card" data-module="Immune">
+          <span class="module-number">06</span><strong>Immune</strong><small>Defense • Cells • Tissues</small><b>↗</b>
+        </button>
+      </div>
+    </section>
+
+    <section class="content-section wrap" id="bloodmatch">
+      <div class="section-intro">
+        <span class="section-tag">BLOODMATCH</span>
+        <h2>Compare blood groups visually.</h2>
+        <p>Educational red blood cell compatibility simulator.</p>
+      </div>
+
+      <div class="blood-lab">
+        <div class="blood-lab__controls">
+          <div class="blood-field">
+            <label for="donorType">DONOR</label>
+            <select id="donorType"><option>O-</option><option>O+</option><option>A-</option><option>A+</option><option>B-</option><option>B+</option><option>AB-</option><option>AB+</option></select>
+          </div>
+          <div class="blood-arrow">→</div>
+          <div class="blood-field">
+            <label for="recipientType">RECIPIENT</label>
+            <select id="recipientType"><option>A+</option><option>O-</option><option>O+</option><option>A-</option><option>B-</option><option>B+</option><option>AB-</option><option>AB+</option></select>
+          </div>
+        </div>
+
+        <div class="blood-result" id="bloodResult">
+          <div class="blood-result__icon">✓</div>
+          <div><span class="section-tag">MATCH</span><h3>Compatible</h3><p>For red blood cell transfusion.</p></div>
+        </div>
+
+        <div class="blood-note">
+          <strong>PUBLIC LEARNING NOTE</strong>
+          <p>Compatibility shown by this simulator is educational. Real transfusions require clinical testing and professional matching.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section wrap" id="about">
+      <div class="public-about">
+        <div>
+          <span class="section-tag">ABOUT BIOQUEST</span>
+          <h2>Built as a public atlas.</h2>
+          <p>BioQuest is designed as a static public website so it can be hosted without a login system or backend.</p>
+        </div>
+        <div class="about-grid">
+          <div><strong>OPEN</strong><span>No account required</span></div>
+          <div><strong>FAST</strong><span>Static HTML/CSS/JS</span></div>
+          <div><strong>RESPONSIVE</strong><span>Desktop + mobile</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div><strong>BioQuest</strong><span>Public Human Biology Atlas</span></div>
+      <div><a href="#systems">Systems</a><a href="#bloodmatch">BloodMatch</a><a href="quiz.html">Quiz</a></div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="atlas.js"></script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BioQuest — Public Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="atlas.css">
+<style>
+.quiz-page{min-height:calc(100vh - 106px);padding:52px 0 80px}
+.quiz-wrap{width:min(980px,92%);margin:auto}
+.quiz-hero{text-align:center;max-width:760px;margin:0 auto 34px}.quiz-hero h1{font:800 54px "Manrope";letter-spacing:-2.8px;margin-top:8px}.quiz-hero h1 span{color:var(--teal)}.quiz-hero p{color:#718781;font-size:11px;line-height:1.8;margin-top:11px}
+.quiz-card{padding:26px;border:1px solid var(--line);border-radius:22px;background:#fff;box-shadow:var(--shadow)}
+.quiz-header{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;font-size:9px;color:#7d918b}.quiz-progress{height:7px;border-radius:999px;background:#e5efed;overflow:hidden}.quiz-progress span{display:block;height:100%;width:10%;background:var(--teal);transition:width .2s ease}
+.quiz-score{font-weight:800;color:var(--teal)}
+.question-card{margin-top:20px;padding:27px;border:1px solid var(--line);border-radius:17px;background:#f7faf9}.question-meta{display:flex;justify-content:space-between;color:#8b9b96;font-size:7px;letter-spacing:1.3px}.question-title{font:700 26px/1.35 "Manrope";margin-top:14px}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}.answer{appearance:none;width:100%;min-height:57px;padding:13px;border-radius:11px;border:1px solid var(--line);background:#fff;color:var(--ink);text-align:left;font-size:10px;display:flex;align-items:center;gap:9px}.answer:hover:not(:disabled){border-color:#9fc2bc;background:#fbfdfc}.answer:disabled{opacity:1}.answer .letter{width:22px;height:22px;flex:none;display:grid;place-items:center;border-radius:7px;background:#eef4f2;color:#66817a;font-size:8px;font-weight:800}.answer.correct{border-color:#7fc1b5;background:#ecf8f5}.answer.correct .letter{background:#d5efe9;color:var(--teal)}.answer.wrong{border-color:#dfabb3;background:#fff1f3}.answer.wrong .letter{background:#f8dce0;color:var(--red)}
+.feedback{display:none;margin-top:14px;padding:12px;border-radius:11px;font-size:9px;line-height:1.7}.feedback.show{display:block}.feedback.correct{color:#286e62;background:#e8f6f2;border:1px solid #c6e5de}.feedback.wrong{color:#8b4852;background:#fff0f2;border:1px solid #efd6da}
+.quiz-actions{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:17px}.quiz-help{color:#879792;font-size:8px}.next-button{padding:12px 18px;border-radius:10px;border:0;background:var(--ink);color:#fff;font-size:10px;font-weight:800}.next-button:disabled{opacity:.35;cursor:not-allowed}
+.result{text-align:center;padding:42px 20px}.result h2{font:800 66px "Manrope";margin:8px}.result h2 span{color:var(--teal)}.result p{color:#758983;font-size:11px}.result-actions{margin-top:22px;display:flex;justify-content:center;gap:9px;flex-wrap:wrap}
+@media(max-width:650px){.quiz-hero h1{font-size:43px}.quiz-header{grid-template-columns:1fr}.answers{grid-template-columns:1fr}.quiz-actions{flex-direction:column;align-items:stretch}}
+</style>
+</head>
+<body>
+<div class="public-strip"><div class="wrap public-strip__inner"><span class="public-live"><i></i> PUBLIC QUIZ</span><span>Open educational challenge • No account required</span><span class="strip-right">BIOQUEST / QUIZ-01</span></div></div>
+
+<header class="site-header">
+<div class="wrap site-header__inner">
+<a class="brand" href="index.html"><span class="brand-badge">BQ</span><span>Bio<span>Quest</span></span></a>
+<nav class="main-nav"><a href="index.html#atlas">Atlas</a><a href="index.html#systems">Systems</a><a href="index.html#bloodmatch">BloodMatch</a><a class="active" href="quiz.html">Quiz</a><a href="index.html#about">About</a></nav>
+<a class="public-pill" href="index.html">← Back to atlas</a>
+</div>
+</header>
+
+<main class="quiz-page">
+<div class="quiz-wrap">
+<div class="quiz-hero"><span class="section-tag">PUBLIC KNOWLEDGE CHALLENGE</span><h1>How much do you know about the <span>human body?</span></h1><p>Answer one question at a time. The page stays in place while the question state changes.</p></div>
+
+<div class="quiz-card" id="quizCard">
+<div class="quiz-header"><span id="qNo">Question 1 / 10</span><div class="quiz-progress"><span id="progress"></span></div><span class="quiz-score" id="score">Score 0</span></div>
+
+<section class="question-card">
+<div class="question-meta"><span id="cat">CIRCULATORY</span><span id="diff">FOUNDATION</span></div>
+<h2 class="question-title" id="questionText"></h2>
+<div class="answers" id="answers"></div>
+<div class="feedback" id="feedback" aria-live="polite"></div>
+</section>
+
+<div class="quiz-actions">
+<span class="quiz-help" id="quizHelp">Choose an answer to unlock Next.</span>
+<button class="next-button" id="nextButton" type="button" disabled>Next question →</button>
+</div>
+</div>
+</div>
+</main>
+
+<footer class="site-footer"><div class="wrap site-footer__inner"><div><strong>BioQuest</strong><span>Public Human Biology Atlas</span></div><div><a href="index.html">Atlas</a><a href="index.html#bloodmatch">BloodMatch</a></div></div></footer>
+
+<script>
+"use strict";
+
+const questions=[
+{q:"Which organ pumps blood through the circulatory system?",a:["Lungs","Heart","Liver","Kidneys"],c:1,cat:"CIRCULATORY",diff:"FOUNDATION",why:"The heart is a muscular pump that drives blood through the pulmonary and systemic circuits."},
+{q:"Where does most gas exchange take place in the lungs?",a:["Alveoli","Stomach","Aorta","Nephrons"],c:0,cat:"RESPIRATORY",diff:"FOUNDATION",why:"The alveoli are tiny air sacs where oxygen and carbon dioxide are exchanged with nearby capillaries."},
+{q:"Which organs filter blood and help form urine?",a:["Liver","Brain","Kidneys","Lungs"],c:2,cat:"URINARY",diff:"FOUNDATION",why:"The kidneys contain nephrons that filter blood and modify the filtrate to produce urine."},
+{q:"Which organ produces bile?",a:["Heart","Liver","Stomach","Brain"],c:1,cat:"DIGESTIVE",diff:"FOUNDATION",why:"The liver produces bile, which helps the digestion and absorption of fats."},
+{q:"Which structure is the main control center of the nervous system?",a:["Heart","Lungs","Brain","Kidneys"],c:2,cat:"NERVOUS",diff:"FOUNDATION",why:"The brain receives and integrates information and coordinates many body functions."},
+{q:"Which chamber pumps oxygen-rich blood into the aorta?",a:["Right atrium","Right ventricle","Left atrium","Left ventricle"],c:3,cat:"CIRCULATORY",diff:"INTERMEDIATE",why:"The left ventricle ejects oxygenated blood into the aorta for systemic circulation."},
+{q:"What is the primary role of the alveoli?",a:["Store bile","Filter urine","Exchange gases","Produce hormones"],c:2,cat:"RESPIRATORY",diff:"INTERMEDIATE",why:"Alveoli are the principal site of oxygen and carbon dioxide exchange."},
+{q:"What is a nephron?",a:["A brain lobe","A kidney filtering unit","A heart valve","A lung airway"],c:1,cat:"URINARY",diff:"INTERMEDIATE",why:"A nephron is a microscopic functional unit of a kidney."},
+{q:"Which vessel type carries blood away from the heart?",a:["Veins","Arteries","Ureters","Lymphatics"],c:1,cat:"CIRCULATORY",diff:"FOUNDATION",why:"Arteries carry blood away from the heart; veins generally carry blood toward it."},
+{q:"Which organ stores and mixes food during early digestion?",a:["Liver","Stomach","Kidney","Brain"],c:1,cat:"DIGESTIVE",diff:"FOUNDATION",why:"The stomach stores food and mixes it with acid and digestive secretions before emptying into the small intestine."}
+];
+
+let index=0;
+let score=0;
+let answered=false;
+
+const $=id=>document.getElementById(id);
+
+function render(){
+  const item=questions[index];
+  answered=false;
+  $("qNo").textContent=`Question ${index+1} / ${questions.length}`;
+  $("progress").style.width=`${((index+1)/questions.length)*100}%`;
+  $("score").textContent=`Score ${score}`;
+  $("cat").textContent=item.cat;
+  $("diff").textContent=item.diff;
+  $("questionText").textContent=item.q;
+  $("feedback").className="feedback";
+  $("feedback").textContent="";
+  $("nextButton").disabled=true;
+  $("nextButton").textContent=index===questions.length-1?"Finish quiz →":"Next question →";
+  $("quizHelp").textContent="Choose an answer to unlock Next.";
+
+  const answers=$("answers");
+  answers.innerHTML="";
+
+  item.a.forEach((text,i)=>{
+    const button=document.createElement("button");
+    button.type="button";
+    button.className="answer";
+    button.innerHTML=`<span class="letter">${String.fromCharCode(65+i)}</span><span>${text}</span>`;
+    button.addEventListener("click",()=>answerQuestion(i,button));
+    answers.appendChild(button);
+  });
+}
+
+function answerQuestion(choice,clicked){
+  if(answered)return;
+  answered=true;
+
+  const item=questions[index];
+  const buttons=$("answers").querySelectorAll(".answer");
+  buttons.forEach((button,i)=>{
+    button.disabled=true;
+    if(i===item.c)button.classList.add("correct");
+  });
+
+  if(choice===item.c){
+    score++;
+    $("feedback").className="feedback show correct";
+    $("feedback").textContent="Correct. "+item.why;
+  }else{
+    clicked.classList.add("wrong");
+    $("feedback").className="feedback show wrong";
+    $("feedback").textContent=`Not quite. The correct answer is "${item.a[item.c]}". ${item.why}`;
+  }
+
+  $("score").textContent=`Score ${score}`;
+  $("nextButton").disabled=false;
+  $("quizHelp").textContent=index===questions.length-1?"Ready for your result.":"Answer recorded. Use Next question.";
+}
+
+$("nextButton").addEventListener("click",()=>{
+  if(!answered)return;
+
+  if(index<questions.length-1){
+    index++;
+    render();
+  }else{
+    const pct=Math.round(score/questions.length*100);
+    $("quizCard").innerHTML=`
+      <div class="result">
+        <span class="section-tag">QUIZ COMPLETE</span>
+        <h2><span>${score}</span> / ${questions.length}</h2>
+        <p>${pct}% correct</p>
+        <div style="height:8px;max-width:440px;margin:20px auto 0;border-radius:99px;background:#e6efed;overflow:hidden"><span style="display:block;height:100%;width:${pct}%;background:var(--teal)"></span></div>
+        <div class="result-actions">
+          <button class="button button-primary" id="restart" type="button">Try again ↻</button>
+          <a class="button button-secondary" href="index.html">Back to atlas</a>
+        </div>
+      </div>`;
+    $("restart").addEventListener("click",()=>{index=0;score=0;render()});
+  }
+});
+
+render();
+</script>
+</body>
+</html>
